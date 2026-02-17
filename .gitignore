@@ -1,0 +1,59 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+*.egg
+*.log
+
+# =========================
+# Virtual environments
+# =========================
+.venv/
+venv/
+env/
+ENV/
+*.envrc
+
+# =========================
+# Airflow
+# =========================
+# Logs generados por Airflow
+logs/
+# Archivos compilados de DAGs
+dags/__pycache__/
+# Archivos de SQLite si usas la DB local
+airflow.db
+airflow.cfg
+
+# =========================
+# Datos generados por el pipeline
+# =========================
+data/
+data_lake/
+processed/
+
+# =========================
+# Docker
+# =========================
+# Variables sensibles
+.env
+# Archivos temporales
+*.pid
+*.sock
+
+# =========================
+# VSCode
+# =========================
+.vscode/
+.history/
+
+# =========================
+# Sistema operativo
+# =========================
+.DS_Store
+Thumbs.db
