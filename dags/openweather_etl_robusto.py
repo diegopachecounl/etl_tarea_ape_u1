@@ -30,7 +30,7 @@ def pipeline_weather_raw():
     BASE_DIR = '/opt/airflow/data/data_lake'
 
     @task
-    def extraer_raw() -> str:   #Definicion de la tarea para extraer la informacion de la API
+    def extraer_raw() -> str:   #Definicion de la tarea 1 para extraer la informacion de la API
         print("📋Iniciando la extracción de datos de OpenWeather...")
         API_KEY = os.getenv("OPENWEATHER_APIKEY_DP")
         ciudades = ["Quito", "Loja", "Guayaquil", "Cuenca", "London", "New York", "Tokyo", "Sydney", "Paris", "Berlin"]
