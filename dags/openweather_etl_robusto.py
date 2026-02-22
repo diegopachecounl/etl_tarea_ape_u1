@@ -4,6 +4,7 @@ from airflow.decorators import dag, task
 from datetime import datetime, timedelta
 import requests
 import pandas as pd
+import time
 import os
 from tenacity import retry, stop_after_attempt, wait_exponential,retry_if_exception_type
 
@@ -63,6 +64,7 @@ def pipeline_weather_raw():
             try:
                 print(f"Obteniendo datos para {ciudad}...")
                 datos_crudos.append(safe_api_call(ciudad))
+                time.sleep(1) # Pausa de 1 segundo entre llamadas para ingesta controlada
             except Exception as e:
                 print(f"Error al obtener datos para {ciudad}: {e}")
      
