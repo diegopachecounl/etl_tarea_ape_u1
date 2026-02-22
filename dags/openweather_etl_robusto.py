@@ -33,7 +33,7 @@ def pipeline_weather_raw():
     @task
     def extraer_raw() -> str:   #Definicion de la tarea 1 para extraer la informacion de la API
         print("📋Iniciando la extracción de datos de OpenWeather...")
-        API_KEY = os.getenv("OPENWEATHER_APIKEY_DP")
+        API_KEY = os.getenv("OPENWEATHER_APIKEY_DP")    #Se llama a la API key que esta almacenada en un archivo .env
         ciudades = ["Quito", "Loja", "Guayaquil", "Cuenca", "London", "New York", "Tokyo", "Sydney", "Paris", "Berlin"]
 
         #Resiliencia con tenacity para manejar errores de red

@@ -1,6 +1,6 @@
 # Definición de servicios para Docker Compose
 services:
-#Base de datos Postgres
+#Base de datos Postgres para el registro y almacenamiento de airflow
   postgres:
     image: postgres:13
     environment:
@@ -15,7 +15,7 @@ services:
       timeout: 5s
       retries: 5
     restart: always
-  # Airflow init
+  # Airflow init para inizializar la base de datos y el entorno a utilizar
   airflow-init:
     image: apache/airflow:2.7.1
     environment:
@@ -27,20 +27,20 @@ services:
       - ./logs:/opt/airflow/logs
       - ./plugins:/opt/airflow/plugins
       - ./data:/opt/airflow/data
-    env_file:
+    env_file:   #Llamado al archivo .env que contiene el API key a utilizar
       - .env
     command: bash -c "airflow db init && airflow users create --username admin --firstname Admin --lastname User --role Admin --email admin@example.com --password admin"
     depends_on:
       postgres:
         condition: service_healthy
 
+  #Servidor web e interfaz grafica para Airflow 
   airflow-webserver:
     image: apache/airflow:2.7.1
     environment:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
       AIRFLOW__CORE__LOAD_EXAMPLES: 'False'
-      OPENWEATHER_APIKEY_DP: ${OPENWEATHER_APIKEY_DP}
     volumes:
       - ./dags:/opt/airflow/dags
       - ./logs:/opt/airflow/logs
@@ -48,7 +48,7 @@ services:
       - ./data:/opt/airflow/data
     ports:
       - "8080:8080"
-    env_file:
+    env_file: #Llamado al archivo .env que contiene el API key a utilizar
       - .env
     command: webserver
     healthcheck:
@@ -63,6 +63,7 @@ services:
         condition: service_completed_successfully
     restart: always
 
+  #Motor de control de tareas de Airflow
   airflow-scheduler:
     image: apache/airflow:2.7.1
     environment:
@@ -75,7 +76,7 @@ services:
       - ./plugins:/opt/airflow/plugins
       - ./data:/opt/airflow/data
     command: scheduler
-    env_file:
+    env_file:  #Llamado al archivo .env que contiene el API key a utilizar
       - .env
     depends_on:
       postgres:
